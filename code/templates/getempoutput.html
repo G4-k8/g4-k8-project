@@ -1,35 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Employee Information</title>
+    <title>Employee Information</title>
+    <style>
+        body {
+            background-image: url("{{ background_image }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: Avenir, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            margin: 100px auto;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: DodgerBlue;
+            margin-bottom: 30px;
+        }
+
+        .info {
+            font-size: 18px;
+            color: #333;
+            line-height: 2;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: white;
+            background-color: grey;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
-<center>
-	<font color="black" size="5" style="font-family: avenir">
-
-		<h1 style="color: DodgerBlue">Employee Information</h1>
-
-		<body style="background: {{ color }};">
-
-			<form>
-
-				<div>
-
-			  		Employee ID:<br> {{ id }} <br><br>
-
-			  		First Name:<br> {{ fname }} <br><br>
-
-			  		Last Name:<br> {{ lname }} <br><br>
-
-			  		Primary Interest:<br> {{ interest }} <br><br>
-
-			  		Location:<br> {{ location }} <br><br>
-			  		
-			  	</div>
-
-			</form>
-			<a href="{{ url_for('home') }}">Back</a>
-		</body>
-
-	</font>
-</center>
+<body>
+    <div class="container">
+        <h1>Employee Information</h1>
+        <div class="info">
+            <strong>Employee ID:</strong> {{ id }} <br>
+            <strong>First Name:</strong> {{ fname }} <br>
+            <strong>Last Name:</strong> {{ lname }} <br>
+            <strong>Primary Interest:</strong> {{ interest }} <br>
+            <strong>Location:</strong> {{ location }} <br>
+        </div>
+        <a href="{{ url_for('home') }}">Back</a>
+    </div>
+</body>
 </html>
