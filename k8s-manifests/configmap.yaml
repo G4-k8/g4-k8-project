@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flask-config
+data:
+  IMAGE_URL: "https://clo835-finalproject-g4.s3.us-east-1.amazonaws.com/background.png"
+  GROUP_NAME: "Group4-CLO835"
