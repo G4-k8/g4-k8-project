@@ -7,6 +7,7 @@ import boto3
 from urllib.parse import urlparse
 
 
+
 app = Flask(__name__)
 
 DBHOST = os.environ.get("DBHOST") or "localhost"
@@ -17,6 +18,13 @@ COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT"))
 image_url = os.getenv("IMAGE_URL")
 group_name = os.getenv("GROUP_NAME")
+
+
+# Credentails from AWS
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_SESSION_TOKEN = os.getenv('AWS_SESSION_TOKEN')
+
 
 # Create a connection to the MySQL database
 db_conn = connections.Connection(
@@ -53,20 +61,20 @@ COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lim
 parsed_uri = urlparse(image_url)
 bucket_name = parsed_uri.netloc                     # 'clo835-finalproject-g4'
 image_key = parsed_uri.path.lstrip('/')                   # 'background.png'
-local_path = f"static/{os.path.basename(image_key)}"      # 'static/background.png'
+local_path = f"static/{os.path.basename(image_key)}"
 
 
 
 # Download image from S3 bucket to local
+        
 def download_image_from_s3(bucket_name, key, local_path):
     try:
+        os.makedirs("static", exist_ok=True)
         s3 = boto3.client('s3')
-        s3.download_file(bucket_name, key, local_path)
-        print(f"Image downloaded successfully! Key: '{key}', Local path: '{local_path}'")
-        return True
+        s3.download_file(bucket_name, image_key, local_path)
+        print(f"Downloaded {image_key} to {local_path}")
     except Exception as e:
-        print(f"Error downloading file '{key}': {e}")
-        return False
+        print("Image download error:", e)
 
 
 @app.route("/", methods=['GET', 'POST'])
