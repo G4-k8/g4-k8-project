@@ -12,7 +12,7 @@ availabilityZones:
   - "us-east-1b"
 
 iam:
-  serviceRoleARN: arn:aws:iam::<AccountID>:role/LabRole
+  serviceRoleARN: arn:aws:iam::230247175281:role/LabRole
 
 managedNodeGroups:
   - name: nodegroup
@@ -21,4 +21,4 @@ managedNodeGroups:
     ssh:
       enableSsm: true
     iam:
-      instanceRoleARN: arn:aws:iam::<AccountID>:role/LabRole
+      instanceRoleARN: arn:aws:iam::230247175281:role/LabRole
