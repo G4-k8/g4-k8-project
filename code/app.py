@@ -70,11 +70,17 @@ local_path = f"static/{os.path.basename(image_key)}"
 def download_image_from_s3(bucket_name, key, local_path):
     try:
         os.makedirs("static", exist_ok=True)
-        s3 = boto3.client('s3')
-        s3.download_file(bucket_name, image_key, local_path)
-        print(f"Downloaded {image_key} to {local_path}")
+        s3 = boto3.client(
+            's3',
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            aws_session_token=AWS_SESSION_TOKEN
+        )
+        s3.download_file(bucket_name, key, local_path)
+        print(f"Downloaded {key} to {local_path}")
     except Exception as e:
         print("Image download error:", e)
+
 
 
 @app.route("/", methods=['GET', 'POST'])
