@@ -1,0 +1,86 @@
+name: Build and Push to ECR
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  BuildImages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Web App Image
+        run: |
+          echo "Building webapp image"
+          docker build -t webapp-image -f code/Dockerfile ./code
+
+      - name: Build MySQL Image
+        run: |
+          echo "Building mysql image"
+          docker build -t mysql-image -f code/Dockerfile_mysql ./code
+
+      - name: Save Images as Artifacts
+        run: |
+          echo "Saving webapp image"
+          docker save -o webapp-image.tar webapp-image:latest
+          echo "Saving mysql image"
+          docker save -o mysql-image.tar mysql-image:latest
+
+      - name: Upload Image Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-images
+          path: |
+            webapp-image.tar
+            mysql-image.tar
+          retention-days: 1
+
+  PushToECR:
+    runs-on: ubuntu-latest
+    needs: BuildImages
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Test AWS Credentials
+        run: |
+          aws sts get-caller-identity
+
+      - name: Log in to ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+      - name: Ensure ECR Repositories
+        run: |
+          aws ecr describe-repositories --repository-names webapp-repo --region ${{ secrets.AWS_REGION }} || aws ecr create-repository --repository-name webapp-repo --region ${{ secrets.AWS_REGION }}
+          aws ecr describe-repositories --repository-names mysql-repo --region ${{ secrets.AWS_REGION }} || aws ecr create-repository --repository-name mysql-repo --region ${{ secrets.AWS_REGION }}
+
+      - name: Download Image Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-images
+          path: .
+
+      - name: Load Images
+        run: |
+          docker load -i webapp-image.tar
+          docker load -i mysql-image.tar
+
+      - name: Tag and Push Images
+        run: |
+          docker tag webapp-image:latest ${{ secrets.ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/webapp-repo:latest
+          docker tag mysql-image:latest ${{ secrets.ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mysql-repo:latest
+          docker push ${{ secrets.ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/webapp-repo:latest
+          docker push ${{ secrets.ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mysql-repo:latest
