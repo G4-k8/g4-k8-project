@@ -1,23 +1,27 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mysql
   namespace: final
+  labels:
+    app.kubernetes.io/app: mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql
+      app.kubernetes.io/app: mysql
+  serviceName: mysql-headless
   template:
     metadata:
       labels:
-        app: mysql
+        app.kubernetes.io/app: mysql
     spec:
-      imagePullSecrets:
-        - name: ecr-secret
+      serviceAccountName: clo835
       containers:
       - name: mysql
         image: 230247175281.dkr.ecr.us-east-1.amazonaws.com/mysql-repo
+        ports:
+        - containerPort: 3306
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -26,12 +30,12 @@ spec:
               key: DBPWD
         - name: MYSQL_DATABASE
           value: employees
-        ports:
-        - containerPort: 3306
         volumeMounts:
-        - name: mysql-persistent-storage
+        - name: mysql-data
           mountPath: /var/lib/mysql
+      imagePullSecrets:
+      - name: ecr-secret
       volumes:
-      - name: mysql-persistent-storage
+      - name: mysql-data
         persistentVolumeClaim:
           claimName: mysql-pvc
