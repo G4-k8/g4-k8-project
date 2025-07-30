@@ -3,7 +3,7 @@ name: Build and Push to ECR
 on:
   push:
     branches:
-      - kubernetes
+      - master
     paths:
       - 'code/**'
   workflow_dispatch:
