@@ -6,7 +6,6 @@ import argparse
 import boto3
 from urllib.parse import urlparse
 
-
 app = Flask(__name__)
 
 DBHOST = os.environ.get("DBHOST") or "localhost"
