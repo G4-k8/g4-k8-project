@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - kubernetes
+    paths:
+      - 'code/**'
   workflow_dispatch:
 
 jobs:
