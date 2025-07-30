@@ -7,6 +7,6 @@ subjects:
   name: clo835
   namespace: final
 roleRef:
-  kind: ClusterRole
-  name: CLO835
   apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: CLO835-users
