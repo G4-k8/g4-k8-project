@@ -48,14 +48,14 @@ color_codes = {
 }
 
 
-#Create a string of supported colors
+# Create a string of supported colors
 SUPPORTED_COLORS = ",".join(color_codes.keys())
 
 # Generate a random color
 COLOR = random.choice(["red", "green", "blue", "blue2", "darkblue", "pink", "lime"])
 
 
-#Parse the S3 URI
+# Parse the S3 URI
 parsed_uri = urlparse(image_url)
 bucket_name = parsed_uri.netloc                     # 'clo835-finalproject-g4'
 image_key = parsed_uri.path.lstrip('/')                   # 'background.png'
