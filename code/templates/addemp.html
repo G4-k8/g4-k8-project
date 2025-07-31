@@ -47,6 +47,11 @@
 <body>
 
 	<h1 style="color: DodgerBlue">Employee Database</h1>
+	   {% if group_name %}
+            <h1 style="color: DodgerBlue">Hello from {{ group_name }}!</h1>
+        {% else %}
+            <h1>Hello From CLO835!</h1>
+        {% endif %}
 
 	<div class="form-container">
 		<form action="/addemp" autocomplete="on" method="POST" enctype="multipart/form-data">
