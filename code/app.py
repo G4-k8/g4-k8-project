@@ -15,7 +15,7 @@ DATABASE = os.environ.get("DATABASE") or "employees"
 COLOR_FROM_ENV = os.environ.get('APP_COLOR') or "lime"
 DBPORT = int(os.environ.get("DBPORT"))
 image_url = os.getenv("IMAGE_URL")
-group_name = os.getenv("GROUP_NAME")
+group_name = os.getenv("USER_NAME")
 
 
 # Credentails from AWS

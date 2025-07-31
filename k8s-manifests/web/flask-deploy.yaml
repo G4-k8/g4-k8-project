@@ -20,7 +20,7 @@ spec:
         - name: ecr-secret
       containers:
       - name: flask-app
-        image: 230247175281.dkr.ecr.us-east-1.amazonaws.com/webapp-repo
+        image: 562183160408.dkr.ecr.us-east-1.amazonaws.com/webapp-repo
         ports:
         - containerPort: 81
         env:
