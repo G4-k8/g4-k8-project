@@ -19,7 +19,7 @@ spec:
       serviceAccountName: clo835
       containers:
       - name: mysql
-        image: 230247175281.dkr.ecr.us-east-1.amazonaws.com/mysql-repo
+        image: 403539841960.dkr.ecr.us-east-1.amazonaws.com/mysql-repo
         ports:
         - containerPort: 3306
         env:
