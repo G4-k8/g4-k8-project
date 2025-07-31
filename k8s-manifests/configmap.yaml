@@ -4,6 +4,6 @@ metadata:
   name: flask-config
   namespace: final
 data:
-  IMAGE_URL: "s3://clo835-finalproject-g4/background.png"
+  IMAGE_URL: "s3://clo835-finalproject-g4-2/background.png"
   GROUP_NAME: "Group4-CLO835"
   USER_NAME: "Group4-CLO835"

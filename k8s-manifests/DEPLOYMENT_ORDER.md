@@ -123,7 +123,7 @@ kubectl apply -f mysql/pvc.yaml
 
 # Install Driver to bound PVC
 ```bash
-eksctl create addon --name aws-ebs-csi-driver --cluster clo835 --service-account-role-arn arn:aws:iam::230247175281:role/AmazonEKS_EBS_CSI_DriverRole --force
+eksctl create addon --name aws-ebs-csi-driver --cluster newclo835 --service-account-role-arn arn:aws:iam::403539841960:role/AmazonEKS_EBS_CSI_DriverRole --force
 ```
 
 
@@ -150,7 +150,7 @@ kubectl apply -f rolebinding.yaml
 
 # Create secrets ecr to fetch images from ECR, use your Account ID
 ```bash
-kubectl create secret docker-registry ecr-secret   --docker-server=230247175281.dkr.ecr.us-east-1.amazonaws.com   --docker-username=AWS   --docker-password="$(aws ecr get-login-password --region us-east-1)"   --namespace=final
+kubectl create secret docker-registry ecr-secret   --docker-server=403539841960.dkr.ecr.us-east-1.amazonaws.com   --docker-username=AWS   --docker-password="$(aws ecr get-login-password --region us-east-1)"   --namespace=final
 ```
 
 ### 8. MySQL StatefulSet

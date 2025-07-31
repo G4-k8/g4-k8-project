@@ -20,7 +20,7 @@ spec:
         - name: ecr-secret
       containers:
       - name: flask-app
-        image: 562183160408.dkr.ecr.us-east-1.amazonaws.com/webapp-repo
+        image: 403539841960.dkr.ecr.us-east-1.amazonaws.com/webapp-repo
         ports:
         - containerPort: 81
         env:
@@ -67,3 +67,8 @@ spec:
             secretKeyRef:
               name: aws-creds
               key: AWS_SESSION_TOKEN
+        resources:
+          requests:
+            cpu: "100m"
+          limits:
+            cpu: "200m"
