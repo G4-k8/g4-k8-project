@@ -82,12 +82,12 @@ def download_image_from_s3(bucket_name, key, local_path):
 
 @app.route("/about", methods=['GET','POST'])
 def about():
-    # return render_template('about.html', color=color_codes[COLOR])
+    #return render_template('about.html', color=color_codes[COLOR])
     return render_template('about.html', background_image=local_path, group_name=group_name)
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    # return render_template('addemp.html', color=color_codes[COLOR])
+    #return render_template('addemp.html', color=color_codes[COLOR])
     return render_template('addemp.html', background_image=local_path, group_name=group_name)
 
     
