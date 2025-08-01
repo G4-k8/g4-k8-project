@@ -113,13 +113,13 @@ def AddEmp():
         cursor.close()
 
     print("all modification done...")
-    # return render_template('addempoutput.html', name=emp_name, color=color_codes[COLOR])
+    # return  render_template('addempoutput.html', name=emp_name, color=color_codes[COLOR])
     return render_template('addempoutput.html', name=emp_name, background_image=local_path)
 
 
 @app.route("/getemp", methods=['GET', 'POST'])
 def GetEmp():
-    # return render_template("getemp.html", color=color_codes[COLOR])
+    # return  render_template("getemp.html", color=color_codes[COLOR])
     return render_template("getemp.html", background_image=local_path)
 
 
